@@ -1,7 +1,7 @@
 module BiMaps
 
-import Base: show, length, getindex, setindex!, haskey, get, get!, getkey,
-    delete!, pop!, keys, values, pairs, sizehint!, keytype, valtype
+import Base: show, length, iterate, getindex, setindex!, haskey, get, get!,
+    getkey, delete!, pop!, keys, values, pairs, sizehint!, keytype, valtype
 
 export BiMap, rev, hasval, getval
 
@@ -55,6 +55,7 @@ const _def = _Def()
 
 # New methods
 length(m::BiMap) = length(m._map)
+iterate(m::BiMap, state...) = iterate(m._map, state...)
 getindex(m::BiMap, key) = m._map[key]
 function setindex!(m::BiMap, val, key)
     get(m._map, key, _def) == val && return m
