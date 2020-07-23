@@ -58,7 +58,12 @@ length(m::BiMap) = length(m._map)
 iterate(m::BiMap, state...) = iterate(m._map, state...)
 getindex(m::BiMap, key) = m._map[key]
 function setindex!(m::BiMap, val, key)
-    get(m._map, key, _def) == val && return m
+    old_val = get(m._map, key, _def)
+    if old_val !== _def
+        delete!(m._rev, old_val)
+    elseif old_val == val
+        return m
+    end
     haskey(m._rev, val) && throw(KeyError(
         "Value already exists in BiMap: $(val) (key=$(key))"))
     m._map[key] = val
