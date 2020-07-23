@@ -30,13 +30,12 @@ function BiMap(forward::Dict{K, V}) where {K, V}
     BiMap{keytype(forward), valtype(forward)}(forward)
 end
 function BiMap(forward::Dict{K, V}, reverse::Dict{V, K}) where {K, V}
-    @assert length(forward) == length(reverse)
     BiMap{keytype(forward), valtype(forward)}(forward, reverse)
 end
 BiMap(args...) = BiMap(Dict(args...))
 
 """Return a `BiMap` with forward and reverse switched."""
-rev(map::BiMap{K, V}) where K where V = BiMap(map._rev, map._map)
+@inline rev(map::BiMap{K, V}) where K where V = BiMap{V, K}(map._rev, map._map)
 
 show(io::IO, ::MIME"text/plain", map::BiMap) = show(io, map)
 function show(io::IO, map::BiMap)
