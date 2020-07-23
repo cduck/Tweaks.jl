@@ -30,9 +30,15 @@ map = BiMap('a'=>1, 'b'=>2)
 #### Graphs
 ```julia
 using MetaGraphs
-using Tweaks
+using Tweaks.GraphUtil
 
 g = MetaGraph(5)
+
+add_edge(g, 2, 3)
+set_weight(g, 2, 3, 5.5)
+set_weight(g, Edge(2, 3), 5.5)
+
+add_edge(g, 2, 3, 5.5)
 
 get_weight(g, 2, 3, -1)
 get_weight(g, Edge(2, 3), -1)
