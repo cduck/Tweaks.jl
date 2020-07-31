@@ -1,7 +1,8 @@
 module BiMaps
 
 import Base: show, length, iterate, getindex, setindex!, haskey, get, get!,
-    getkey, delete!, pop!, keys, values, pairs, sizehint!, keytype, valtype
+    getkey, delete!, pop!, keys, values, pairs, sizehint!, keytype, valtype,
+    copy, copy!
 
 export BiMap, rev, hasval, getval
 
@@ -32,6 +33,7 @@ end
 function BiMap(forward::Dict{K, V}, reverse::Dict{V, K}) where {K, V}
     BiMap{keytype(forward), valtype(forward)}(forward, reverse)
 end
+BiMap{K, V}(args...) where {K, V} = BiMap{K, V}(Dict{K, V}(args...))
 BiMap(args...) = BiMap(Dict(args...))
 
 """Return a `BiMap` with forward and reverse switched."""
@@ -97,6 +99,10 @@ pairs(m::BiMap) = pairs(m._map)
 sizehint!(m::BiMap, n) = (sizehint!(m._map, n); sizehint!(m._rev, n))
 keytype(m::BiMap) = keytype(m._map)
 valtype(m::BiMap) = valtype(m._map)
+
+copy(m::BiMap{K, V}) where {K, V} = BiMap{K, V}(copy(m._map), copy(m._rev))
+copy!(dst::BiMap{K, V}, src::BiMap{K, V}) where {K, V} = (
+    copy!(dst._map, src._map); copy!(dst._rev, src._rev); dst)
 
 # New functions
 hasval(m::BiMap, key) = haskey(m._rev, key)
