@@ -5,6 +5,7 @@ module Tweaks
 include("BiMaps.jl")
 include("GraphUtil.jl")
 include("Time.jl")
+include("Plot.jl")
 
 # Tweaks
 include("BaseTweaks.jl"); using .BaseTweaks
