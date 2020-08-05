@@ -2,8 +2,12 @@ module BaseTweaks
 
 import Base: argmin, argmax
 
+export totuple, @tuple
+
 
 """
+    argmin(f::Function, itr)
+
 Return the element of `itr` with the minimum result of `f(itr)`.
 
 If two elements result in the same value, the tie is broken by choosing the
@@ -27,6 +31,8 @@ end
 
 
 """
+    argmax(f::Function, itr)
+
 Return the element of `itr` with the maximum result of `f(itr)`.
 
 If two elements result in the same value, the tie is broken by choosing the
@@ -46,6 +52,24 @@ function argmax(f::Function, itr)
         next = iterate(itr, next[2])
     end
     maxelem
+end
+
+
+"""
+    totuple(itr)
+
+Convert an iterator into a tuple.
+"""
+totuple(itr::Tuple) = itr
+totuple(itr) = (itr...,)
+
+"""
+    @tuple itr
+
+Convert an iterator into a tuple.
+"""
+macro tuple(expr)
+    :($(esc(expr))...,)
 end
 
 
