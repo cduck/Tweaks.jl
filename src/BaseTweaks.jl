@@ -1,8 +1,18 @@
 module BaseTweaks
 
-import Base: argmin, argmax
-
 export totuple, @tuple
+
+
+"""
+    append!(dict, iter)
+
+Update the dictionary with the new key-value pairs in the list or iterator.
+"""
+function Base.append!(dict::Dict, iter)
+    for (k, v) in iter
+        dict[k] = v
+    end
+end
 
 
 """
@@ -13,7 +23,7 @@ Return the element of `itr` with the minimum result of `f(itr)`.
 If two elements result in the same value, the tie is broken by choosing the
 one generated first by `itr`.
 """
-function argmin(f::Function, itr)
+function Base.argmin(f::Function, itr)
     next = iterate(itr)
     next === nothing && throw(ArgumentError("collection must be non-empty"))
     minelem = next[1]
@@ -38,7 +48,7 @@ Return the element of `itr` with the maximum result of `f(itr)`.
 If two elements result in the same value, the tie is broken by choosing the
 one generated first by `itr`.
 """
-function argmax(f::Function, itr)
+function Base.argmax(f::Function, itr)
     next = iterate(itr)
     next === nothing && throw(ArgumentError("collection must be non-empty"))
     maxelem = next[1]
