@@ -1,6 +1,6 @@
 # Tweaks.jl
 
-Convenient tweaks and additions to various [Julia](https://julialang.org/) packages.
+My personal convenience tweaks and additions to various [Julia](https://julialang.org/) packages.
 Also bits of generally useful code.
 
 
